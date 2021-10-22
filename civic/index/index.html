@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <meta charset="UTF-8">
+  <meta name="description" content="Projet par @sinizin (Yanis Belkadi)">
+  <meta name="author" content="sinizin">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Zetta:wght@500&display=swap" rel="stylesheet">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <head>
+        <title>Balo.fr</title>
+        <div class="header">
+        <h2 class="balo">Balo 🗳️</h2>
+        <span class="slogan">Vos lois, votre avis.</span>
+        </div>
+        <ul>
+            <li>
+                <a style="text-decoration: none" href="https://www.assemblee-nationale.fr/dyn/documents-parlementaires">Documentation</a>
+                <a style="text-decoration: none" href="https://github.com/sinizin">GitHub</a>
+            </li>
+        </ul>
+        
+        <div id="omcsv">
+
+        </div>
+
+        <div align="center">
+            <button type="button" name="load_data" id="load_data" class="btn btn-info">LOAD</button>
+        </div>
+        <div class="poll">
+            <div class="question"></div>
+            <div class="answers"></div>
+          </div>
+    </head>
+</html>
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    html, body {
+        background: #f3f3f3;
+    }
+        
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .balo {
+        font-family: 'Lexend Zetta', sans-serif;
+        font-weight: bolder;
+        color: #218c74;
+        padding: 20px;
+        margin: 0;
+        align-self: flex-start;
+    }
+
+    .slogan {
+        font-family: 'Lexend Zetta', sans-serif;
+        font-size: 15px;
+        align-self: center;
+        padding: 18.25px;
+        color: #218c74;
+    }
+
+    #load_data {
+        background-color: #f7f1e3;
+        border-radius: 3px;
+        border-width: 2px;
+        border-color: #00ffc8;
+        font-family: 'Lexend Zetta', sans-serif;
+        color: #00ffc8;
+        outline:none;
+        padding: 8px;
+    }
+
+    li {
+        display: flex;
+        justify-content: space-evenly;
+        background-color: #218c74;
+        height: 7rem;
+    }
+
+    a {
+        align-self: center;
+        font-family: 'Lexend Zetta', sans-serif;
+        color: #f7f1e3;
+        transition: font-size ease-in-out .1s;
+        transform: translateZ(0);
+        will-change: transform;
+    }
+
+    .formbox {
+        width: 100%;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .desc {
+        font-family: 'Lexend Zetta', sans-serif;
+        color: #2b2b2b;
+        padding: 20px;
+    }
+
+    #load_data:hover {
+        transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+        color: white;
+    }
+
+    .poll {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:100%;
+  max-width:400px;
+  background:#fff;
+  border-radius:10px;
+  box-shadow:0px 0px 20px 5px rgba(35,30,128,0.05);
+}
+.poll .question {
+  padding:20px;
+  color:#111;
+  font-size:18px;
+  border-bottom:1px solid #eee;
+}
+.poll .answers {
+  padding:20px 20px 10px;
+}
+.poll .answers .answer {
+  position:relative;
+  width:100%;
+  height:40px;
+  padding:0px 10px;
+  line-height:40px;
+  color:#111;
+  margin-bottom:10px;
+  border:1px solid #d4d4d4;
+  border-radius:10px;
+  cursor:pointer;
+  overflow:hidden;
+}
+.poll .answers .answer.selected {
+  border:2px solid #09ff00;
+}
+.poll .answers .answer span.percentage-value {
+  position:absolute;
+  top:50%;
+  right:0px;
+  width:40px;
+  transform:translateY(-50%);
+  color:rgb(0, 0, 0);
+  font-size:15px;
+}
+.poll .answers .answer span.percentage-bar {
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:0%;
+  height:100%;
+  background:#ccd8f1;
+  z-index:-1;
+  transition:width 300ms ease-in-out;
+}
+
+    a:hover {
+        color: #f3f3f3;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #f7f1e3;
+    }
+
+    @media only screen and (max-width: 500px) {
+        li {
+            height: 4rem;
+        }
+
+        a {
+            font-size: 11px;
+        }
+    }
+
+    @media only screen and (max-width: 240px) {
+        a {
+            font-size: 9px;
+        }
+    }
+
+    @media only screen and (max-width: 240px) {
+        ul {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    $(document).ready(function(){
+     $('#load_data').click(function(){
+      $.ajax({
+       url:"lastOMC.csv",
+       dataType:"text",
+       success:function(data)
+       {
+        var employee_data = data.split(/\r?\n|\r/);
+        var table_data = '<table class="table table-bordered table-striped">';
+        for(var count = 0; count<employee_data.length; count++)
+        {
+         var cell_data = employee_data[count].split('|');
+         table_data += '<tr>';
+         for(var cell_count=0; cell_count<cell_data.length; cell_count++)
+         {
+          if(count === 0)
+          {
+           table_data += '<th>'+cell_data[cell_count]+'</th>';
+          }
+          else
+          {
+           table_data += '<td>'+cell_data[cell_count]+'</td>';
+          }
+         }
+         table_data += '</tr>';
+        }
+        table_data += '</table>';
+        $('#omcsv').html(table_data);
+       }
+      });
+     });
+     
+    });
+
+    let poll = {
+  question:"Qu'en pensez vous ?",
+  answers:[
+    "C'est bien", "Pas d'opinion", "Ce n'est pas une bonne mesure",
+  ],
+  pollCount:[10],
+  answersWeight:[0, 0, 0],
+  selectedAnswer:-1,
+};
+
+let pollDOM = {
+  question:document.querySelector(".poll .question"),
+  answers:document.querySelector(".poll .answers")
+};
+
+pollDOM.question.innerText = poll.question;
+pollDOM.answers.innerHTML = poll.answers.map(function(answer,i){
+  return (
+    `
+      <div class="answer" onclick="markAnswer('${i}')">
+        ${answer}
+        <span class="percentage-bar"></span>
+        <span class="percentage-value"></span>
+      </div>
+    `
+  );
+}).join("");
+
+function markAnswer(i){
+  poll.selectedAnswer = +i;
+  try {
+    document.querySelector(".poll .answers .answer.selected").classList.remove("selected");
+  } catch(msg){}
+  document.querySelectorAll(".poll .answers .answer")[+i].classList.add("selected");
+  showResults();
+}
+
+function showResults(){
+  let answers = document.querySelectorAll(".poll .answers .answer");
+  for(let i=0;i<answers.length;i++){
+    let percentage = 0;
+    if(i == poll.selectedAnswer){
+      percentage = Math.round(
+        (poll.answersWeight[i]+1) * 100 / (poll.pollCount+1)
+      );
+    } else {
+      percentage = Math.round(
+        (poll.answersWeight[i]) * 100 / (poll.pollCount+1)
+      );
+    }
+    
+    answers[i].querySelector(".percentage-bar").style.width = percentage + "%";
+    answers[i].querySelector(".percentage-value").innerText = percentage + "%";
+  }
+}
+    </script>
