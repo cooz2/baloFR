@@ -1,0 +1,122 @@
+{
+  "intents": [
+    {
+      "tag": "salutations",
+      "patterns": ["bonjour", "hi", "salut", "hello", "salutations", "bonsoir"],
+      "reponses": [
+        "Bonjour !",
+        "Salut humain :)",
+        "Que puis-je faire pour vous?"
+      ]
+    },
+    {
+      "tag": "aurevoir",
+      "patterns": [
+        "bye",
+        "a +",
+        "aurevoir",
+        "adieu",
+        "je pars",
+        "je m'en vais",
+        "ciao",
+        "a bientot"
+      ],
+      "reponses": ["À bientôt !", "Merci de votre visite", "Bye bye ;)"]
+    },
+    {
+      "tag": "age",
+      "patterns": [
+        "quel age",
+        "ton age",
+        "quel est ton age",
+        "est tu vieux",
+        "est tu jeune",
+        "quel age as tu"
+      ],
+      "reponses": [
+        "Je n'ai pas d'âge",
+        "Je ne naîtrai pas, je suis un robot !",
+        "J'ai été programmé le 16 Novembre 2021."
+      ]
+    },
+    {
+      "tag": "Nom",
+      "patterns": [
+        "Quel est ton nom",
+        "quel est ton prenom",
+        "comment tu t'appelles",
+        "comment je peux t'appeler"
+      ],
+      "reponses": [
+        "Je suis Balo Bot ! Ou Blot ? Ou Babot ?",
+        "Je n'ai pas de téléphone malheureusement",
+        "Je suis Balo Bot, pour les intimes."
+      ]
+    },
+    {
+      "tag": "Loi",
+      "patterns": [
+        "Texte de loi",
+        "assemblee nationale",
+        "loi",
+        "parlement",
+        "la loi c'est bien",
+        "Juridiction"
+      ],
+      "reponses": [
+        "Mon savoir provient du site de l'AN française",
+        "J'utilise une API & Open Data",
+        "Retrouvez les documents officiels sur https://www.assemblee-nationale.fr/"
+      ]
+    },
+    {
+      "tag": "Vote",
+      "patterns": [
+        "je veux voter",
+        "je vote",
+        "ou voter",
+        "deleguer",
+        "Depute",
+        "president"
+      ],
+      "reponses": [
+        "Un bulletin de vote est plus fort qu'une balle de fusil - Abraham Lincoln",
+        "Ce qui compte ce n'est pas les votes, c'est comment on compte les votes - Joseph Staline",
+        "Voter c'est un acte citoyen, c'est faire valoir votre soutien, votre méfiance et c'est une responsabilité. Renseignez-vous sur service-public.fr"
+      ]
+    },
+    {
+      "tag": "meteo",
+      "patterns": [
+        "quel est le temps",
+        "la meteo",
+        "soleil ou pluie",
+        "neige",
+        "il pleut demain",
+        "meteo"
+      ],
+      "reponses": [
+        "Je n'ai pas cette information, en fait je suis souvent chez moi.",
+        "Essayez https://meteofrance.com/",
+        "Je n'aime pas l'eau, la poussière est un tueur silencieux et le soleil est trop chaud pour moi."
+      ]
+    },
+    {
+      "tag": "president",
+      "patterns": [
+        "Macron",
+        "le pen",
+        "zemmour",
+        "melanchon",
+        "giscard",
+        "chirac",
+        "president"
+      ],
+      "reponses": [
+        "Je n'ai pas cette information, en fait je suis souvent chez moi.",
+        "Essayez https://meteofrance.com/",
+        "Je n'aime pas l'eau, la poussière est un tueur silencieux et le soleil est trop chaud pour moi."
+      ]
+    }
+  ]
+}
